@@ -96,6 +96,7 @@ public class profile extends javax.swing.JFrame {
         nik = new javax.swing.JTextField();
         nama = new javax.swing.JTextField();
         almt = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -111,6 +112,13 @@ public class profile extends javax.swing.JFrame {
         almt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 almtActionPerformed(evt);
+            }
+        });
+
+        jButton2.setText("jButton2");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
             }
         });
 
@@ -139,7 +147,11 @@ public class profile extends javax.swing.JFrame {
                             .addComponent(nik)
                             .addComponent(nama, javax.swing.GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE)
                             .addComponent(almt))))
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addContainerGap(107, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addGap(30, 30, 30))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -150,15 +162,17 @@ public class profile extends javax.swing.JFrame {
                     .addComponent(nika, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(namaa, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
-                    .addComponent(nama, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE))
+                    .addComponent(namaa, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
+                    .addComponent(nama, javax.swing.GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(almt, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jenkel, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addComponent(jButton2)
+                .addContainerGap())
         );
 
         pack();
@@ -173,6 +187,39 @@ public class profile extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_almtActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        hapus();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    public void hapus() {
+        Object[]options = {"YA","TIDAK"};
+    int konfirmasi=JOptionPane.showOptionDialog(null,"Apakah Anda Ingin Hapus Data?","Konfirmasi",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,options,options[0]);
+    if(konfirmasi==JOptionPane.YES_OPTION) {
+        }
+        try {
+            String hubung = "jdbc:mysql://localhost:3306/pjj";
+                    Class.forName("com.mysql.jdbc.Driver").newInstance();
+                    Connection kon = DriverManager.getConnection(hubung,"root","");
+                    Statement stt = kon.createStatement();
+                    String SQL = "delete from tb_pengguna where nik='"+nik.getText()+"'";
+                    stt.executeUpdate(SQL);
+                     data[0] = nik.getText();
+                 data[1] = nama.getText();
+                 data[2] = almt.getText();
+                 data[3] = jenkel.getSelectedItem().toString();
+                
+                 stt.close();
+            kon.close();
+            
+            login inf = new login();
+        inf.setVisible(true);
+        this.dispose();
+            
+        } catch (Exception exc) {
+        }
+    }
+    
     public void ubah() {
         Object[]options = {"YA","TIDAK"};
         int konfirmasi=JOptionPane.showOptionDialog(null,"Apakah Anda Ingin Ubah Data?","Konfirmasi",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE,null,options,options[0]);
@@ -184,7 +231,7 @@ public class profile extends javax.swing.JFrame {
                     Connection kon = DriverManager.getConnection(hubung,"root","");
                     Statement stt = kon.createStatement();
                     String SQL = "update tb_pengguna set nik = '"+nik.getText()+"',"+"nama='"+nama.getText()+"',"+"alamat='"+almt.getText()+"',"+"jenkel='"+jenkel.getSelectedItem()+"' where nik = '"+nik.getText()+"'";
-                    
+                   // JOptionPane.showMessageDialog(null, "Data Berhasil Disimpan!");
                      stt.executeUpdate(SQL);
                      data[0] = nik.getText();
                  data[1] = nama.getText();
@@ -235,6 +282,7 @@ public class profile extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField almt;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JComboBox<String> jenkel;
     private javax.swing.JTextField nama;
     private javax.swing.JLabel namaa;
